@@ -42,6 +42,8 @@ owlContextDestroy(OWLContext context)
 {
     FAKE_LOG_DBG << "Destroying context";
 
+    if (!context) return;
+
     Context* ctx = (Context*)context;
     UnregisterManagedResource(ctx->resourceHandle);
     delete ctx;
@@ -51,6 +53,7 @@ OWL_API void
 owlContextSetRayTypeCount(OWLContext context,
                           size_t numRayTypes)
 {
+    if (!context) return;
     Context* ctx = (Context*)context;
     ctx->setRayTypeCount((int)numRayTypes);
 }
@@ -59,6 +62,7 @@ OWL_API void
 owlSetMaxInstancingDepth(OWLContext context,
                          int32_t maxInstanceDepth)
 {
+    if (!context) return;
     Context* ctx = (Context*)context;
     ctx->setMaxInstancingDepth(maxInstanceDepth);
 }
