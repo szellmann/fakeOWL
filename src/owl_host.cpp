@@ -76,6 +76,7 @@ owlRayGenLaunch2D(OWLRayGen rayGen,
                   int       dims_x,
                   int       dims_y)
 {
+    if (!rayGen) return;
     RayGen* rg = (RayGen*)rayGen;
     rg->launch(dims_x, dims_y, nullptr);
 }
@@ -86,6 +87,7 @@ owlLaunch2D(OWLRayGen rayGen,
             int       dims_y,
             OWLParams params)
 {
+    if (!rayGen) return;
     RayGen* rg = (RayGen*)rayGen;
     rg->launch(dims_x, dims_y, (Params*)params);
 }
@@ -132,6 +134,7 @@ owlMissProgSet(OWLContext  context,
 OWL_API void
 owlModuleRelease(OWLModule module)
 {
+    if (!module) return;
     Module* mdl = (Module*)module;
     Context* ctx = mdl->getContext();
     ctx->releaseResource(mdl);
@@ -141,6 +144,7 @@ owlModuleRelease(OWLModule module)
 OWL_API void
 owlRayGenRelease(OWLRayGen rayGen)
 {
+    if (!rayGen) return;
     RayGen* rg = (RayGen*)rayGen;
     Module* mdl = rg->module;
     assert(mdl);
@@ -151,6 +155,7 @@ owlRayGenRelease(OWLRayGen rayGen)
 OWL_API void
 owlBuildPrograms(OWLContext context)
 {
+    if (!context) return;
     Context* ctx = (Context*)context;
     ctx->buildPrograms();
 }
@@ -421,6 +426,7 @@ owlRayGenSet1i(OWLRayGen   obj,
                const char *name,
                int         val)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, val);
 }
@@ -431,6 +437,7 @@ owlRayGenSet2i(OWLRayGen   obj,
                int         x,
                int         y)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y);
 }
@@ -442,6 +449,7 @@ owlRayGenSet3i(OWLRayGen   obj,
                int         y,
                int         z)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y, z);
 }
@@ -454,6 +462,7 @@ owlRayGenSet4i(OWLRayGen   obj,
                int         z,
                int         w)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y, z, w);
 }
@@ -463,6 +472,7 @@ owlRayGenSet1ul(OWLRayGen   obj,
                 const char* name,
                 uint64_t    val)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, val);
 }
@@ -472,6 +482,7 @@ owlRayGenSet1f(OWLRayGen   obj,
                const char* name,
                float       val)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, val);
 }
@@ -482,6 +493,7 @@ owlRayGenSet2f(OWLRayGen   obj,
                float       x,
                float       y)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y);
 }
@@ -493,6 +505,7 @@ owlRayGenSet3f(OWLRayGen   obj,
                float       y,
                float       z)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y, z);
 }
@@ -505,6 +518,7 @@ owlRayGenSet4f(OWLRayGen   obj,
                float       z,
                float       w)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, x, y, z, w);
 }
@@ -513,6 +527,7 @@ OWL_API void owlRayGenSetGroup(OWLRayGen   obj,
                                const char *name,
                                OWLGroup    val)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, (Group*)val);
 }
@@ -522,6 +537,7 @@ owlRayGenSetBuffer(OWLRayGen     obj,
                    const char   *name,
                    OWLBuffer     val)
 {
+    if (!obj) return;
     RayGen* rayGen = (RayGen*)obj;
     rayGen->set(name, (Buffer*)val);
 }
@@ -533,6 +549,7 @@ owlMissProgSet3f(OWLMissProg obj,
                  float       y,
                  float       z)
 {
+    if (!obj) return;
     Miss* miss = (Miss*)obj;
     miss->set(name, x, y, z);
 }
@@ -542,6 +559,7 @@ owlGeomSet1i(OWLGeom     obj,
              const char *name,
              int32_t     val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, val);
 }
@@ -551,6 +569,7 @@ owlGeomSet1ui(OWLGeom     obj,
               const char *name,
               uint32_t    val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, val);
 }
@@ -560,6 +579,7 @@ owlGeomSet1f(OWLGeom     obj,
              const char *name,
              float       val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, val);
 }
@@ -570,6 +590,7 @@ owlGeomSet2f(OWLGeom     obj,
              float       x,
              float       y)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, x, y);
 }
@@ -581,6 +602,7 @@ owlGeomSet3f(OWLGeom     obj,
              float       y,
              float       z)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, x, y, z);
 }
@@ -593,6 +615,7 @@ owlGeomSet4f(OWLGeom     obj,
              float       z,
              float       w)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, x, y, z, w);
 }
@@ -601,6 +624,7 @@ OWL_API void owlGeomSetTexture(OWLGeom     obj,
                                const char *name,
                                OWLTexture  val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, (Texture*)val);
 }
@@ -609,6 +633,7 @@ OWL_API void owlGeomSetGroup(OWLGeom obj,
                              const char *name,
                              OWLGroup val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, (Group*)val);
 }
@@ -618,6 +643,7 @@ owlGeomSetBuffer(OWLGeom     obj,
                  const char *name,
                  OWLBuffer   val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, (Buffer*)val);
 }
@@ -627,6 +653,7 @@ owlGeomSetRaw(OWLGeom    obj,
               const char  *name,
               const void *val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, val);
 }
@@ -636,6 +663,7 @@ owlGeomSetPointer(OWLGeom    obj,
                   const char  *name,
                   const void *val)
 {
+    if (!obj) return;
     Geom* geom = (Geom*)obj;
     geom->set(name, val);
 }
@@ -645,6 +673,7 @@ owlParamsSet1b(OWLParams   obj,
                const char *name,
                bool        val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -654,6 +683,7 @@ owlParamsSet1i(OWLParams  obj,
               const char *name,
               int         val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -664,6 +694,7 @@ owlParamsSet2i(OWLParams   obj,
                int         x,
                int         y)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y);
 }
@@ -675,6 +706,7 @@ owlParamsSet3i(OWLParams   obj,
                int         y,
                int         z)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z);
 }
@@ -687,6 +719,7 @@ owlParamsSet4i(OWLParams   obj,
                int         z,
                int         w)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z, w);
 }
@@ -695,6 +728,7 @@ OWL_API void owlParamsSet2iv(OWLParams   obj,
                              const char *name,
                              const int  *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1]);
 }
@@ -703,6 +737,7 @@ OWL_API void owlParamsSet3iv(OWLParams   obj,
                              const char *name,
                              const int  *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2]);
 }
@@ -711,6 +746,7 @@ OWL_API void owlParamsSet4iv(OWLParams   obj,
                              const char *name,
                              const int  *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2], val[3]);
 }
@@ -720,6 +756,7 @@ owlParamsSet1ui(OWLParams   obj,
                 const char *name,
                 unsigned    val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -730,6 +767,7 @@ owlParamsSet2ui(OWLParams   obj,
                 unsigned    x,
                 unsigned    y)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y);
 }
@@ -741,6 +779,7 @@ owlParamsSet3ui(OWLParams   obj,
                 unsigned    y,
                 unsigned    z)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z);
 }
@@ -753,6 +792,7 @@ owlParamsSet4ui(OWLParams   obj,
                 unsigned    z,
                 unsigned    w)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z, w);
 }
@@ -761,6 +801,7 @@ OWL_API void owlParamsSet2uiv(OWLParams       obj,
                               const char     *name,
                               const unsigned *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1]);
 }
@@ -769,6 +810,7 @@ OWL_API void owlParamsSet3uiv(OWLParams       obj,
                               const char     *name,
                               const unsigned *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2]);
 }
@@ -777,6 +819,7 @@ OWL_API void owlParamsSet4uiv(OWLParams       obj,
                               const char     *name,
                               const unsigned *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2], val[3]);
 }
@@ -786,6 +829,7 @@ owlParamsSet1ul(OWLParams   obj,
                 const char *name,
                 uint64_t    val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -796,6 +840,7 @@ owlParamsSet2ul(OWLParams   obj,
                 uint64_t    x,
                 uint64_t    y)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y);
 }
@@ -807,6 +852,7 @@ owlParamsSet3ul(OWLParams   obj,
                 uint64_t    y,
                 uint64_t    z)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z);
 }
@@ -819,6 +865,7 @@ owlParamsSet4ul(OWLParams   obj,
                 uint64_t    z,
                 uint64_t    w)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z, w);
 }
@@ -827,6 +874,7 @@ OWL_API void owlParamsSet2ulv(OWLParams       obj,
                               const char     *name,
                               const uint64_t *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1]);
 }
@@ -835,6 +883,7 @@ OWL_API void owlParamsSet3ulv(OWLParams       obj,
                               const char     *name,
                               const uint64_t *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2]);
 }
@@ -843,6 +892,7 @@ OWL_API void owlParamsSet4ulv(OWLParams       obj,
                               const char     *name,
                               const uint64_t *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2], val[3]);
 }
@@ -852,6 +902,7 @@ owlParamsSet1f(OWLParams   obj,
                const char *name,
                float       val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -862,6 +913,7 @@ owlParamsSet2f(OWLParams   obj,
                float       x,
                float       y)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y);
 }
@@ -873,6 +925,7 @@ owlParamsSet3f(OWLParams   obj,
                float       y,
                float       z)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z);
 }
@@ -885,6 +938,7 @@ owlParamsSet4f(OWLParams   obj,
                float       z,
                float       w)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, x, y, z, w);
 }
@@ -894,6 +948,7 @@ owlParamsSet2fv(OWLParams    obj,
                 const char  *name,
                 const float *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1]);
 }
@@ -903,6 +958,7 @@ owlParamsSet3fv(OWLParams    obj,
                 const char  *name,
                 const float *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2]);
 }
@@ -912,6 +968,7 @@ owlParamsSet4fv(OWLParams    obj,
                 const char  *name,
                 const float *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val[0], val[1], val[2], val[3]);
 }
@@ -921,6 +978,7 @@ owlParamsSetTexture(OWLParams   obj,
                     const char *name,
                     OWLTexture  val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, (Texture*)val);
 }
@@ -930,6 +988,7 @@ owlParamsSetBuffer(OWLParams   obj,
                    const char *name,
                    OWLBuffer   val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, (Buffer*)val);
 }
@@ -938,6 +997,7 @@ OWL_API void owlParamsSetGroup(OWLParams   obj,
                                const char *name,
                                OWLGroup    val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, (Group*)val);
 }
@@ -947,6 +1007,7 @@ owlParamsSetPointer(OWLParams    obj,
                     const char  *name,
                     const void *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
@@ -956,6 +1017,7 @@ owlParamsSetRaw(OWLParams  obj,
               const char  *name,
               const void *val)
 {
+    if (!obj) return;
     Params* params = (Params*)obj;
     params->set(name, val);
 }
