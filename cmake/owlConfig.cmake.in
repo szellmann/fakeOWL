@@ -1,0 +1,16 @@
+
+@PACKAGE_INIT@
+
+set(OWL_IS_FAKE TRUE)
+
+include(CMakeFindDependencyMacro)
+
+set(CMAKE_MODULE_PATH_TMP ${CMAKE_MODULE_PATH})
+unset(CMAKE_MODULE_PATH)
+
+include("${CMAKE_CURRENT_LIST_DIR}/owl_Exports.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/configure_fake_owl.cmake")
+
+check_required_components("owl")
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH_TMP})

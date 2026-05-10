@@ -58,7 +58,67 @@ set(SOURCES
     owl_host.cpp
 )
 
-set(fakeOwl_LIBRARY fakeOwl PARENT_SCOPE)
-add_library(fakeOwl ${HEADERS} ${SOURCES})
-target_link_libraries(fakeOwl PUBLIC ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
-add_library(owl::owl ALIAS fakeOwl)
+set(fakeOwl_LIBRARY owl PARENT_SCOPE)
+add_library(owl ${HEADERS} ${SOURCES})
+target_link_libraries(owl PUBLIC ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+target_include_directories(owl INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/owl/fakeOwl>
+  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:include/owl/fakeOwl>
+)
+add_library(owl::owl ALIAS owl)
+
+# =========================================================
+# Install
+# =========================================================
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+    "${PROJECT_SOURCE_DIR}/cmake/owlConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/owlConfig.cmake"
+  INSTALL_DESTINATION
+    ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}-${PROJECT_VERSION}
+)
+
+write_basic_package_version_file(
+    "owlConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+install(TARGETS owl
+    EXPORT owl_Exports
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT libraries
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT libraries
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT libraries
+)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/owl
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    COMPONENT headers
+    FILES_MATCHING
+        PATTERN "*.h"
+        PATTERN "*.hh"
+        PATTERN "*.hpp"
+        PATTERN "*.hxx"
+        PATTERN "*.inl"
+        PATTERN "*.inc"
+        PATTERN "*.cuh"
+)
+
+install(EXPORT owl_Exports
+    NAMESPACE owl::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/owl
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/owlConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/owlConfigVersion.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/configure_fake_owl.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/owl
+)
+
+
+

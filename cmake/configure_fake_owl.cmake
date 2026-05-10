@@ -1,5 +1,8 @@
 macro(fake_owl_compile_and_embed output_var file)
 
+    set(multiArgs LINK_LIBRARIES)
+    cmake_parse_arguments(ARG "" "" "${multiArgs}" ${ARGN})
+
     set(targetName ${file})
 
     if (TARGET ${targetName})
@@ -17,7 +20,7 @@ macro(fake_owl_compile_and_embed output_var file)
     target_compile_definitions(${targetName} PUBLIC FAKE_OWL_DEFINE_ENTRY_POINTS)
     set_target_properties(${targetName} PROPERTIES LINKER_LANGUAGE "CXX")
     set_source_files_properties(${targetName} PROPERTIES LANGUAGE "CXX")
-    target_link_libraries(${targetName} ${fakeOwl_LIBRARY})
+    target_link_libraries(${targetName} ${fakeOwl_LIBRARY} ${ARG_LINK_LIBRARIES})
     #set_property(TARGET ${targetName} PROPERTY INTERPROCEDURAL_OPTIMIZATION True)
     #set_property(TARGET ${targetName} PROPERTY COMPILE_FLAGS "-lto")
 

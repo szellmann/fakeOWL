@@ -379,6 +379,9 @@ namespace fake
     typedef unsigned long long TextureHandle;
 }
 
+typedef struct {
+} cudaStream_t;
+
 typedef fake::TextureHandle cudaTextureObject_t;
 typedef fake::TextureHandle CUtexObject;
 

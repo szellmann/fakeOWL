@@ -1,5 +1,5 @@
 
-project(fakeOwl)
+project(fakeOwl VERSION 0.1.0)
 
 cmake_minimum_required(VERSION 3.5)
 
@@ -12,6 +12,7 @@ option(BUILD_SHARED_LIBS "Build all libraries as shared libraries instead of sta
 option(FAKE_OWL_BUILD_SAMPLES "Build the Samples?" OFF)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/owl/fakeOwl)
 include_directories(${PROJECT_SOURCE_DIR}/submodules/visionaray/include)
 
 add_subdirectory(src)
