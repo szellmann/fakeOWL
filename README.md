@@ -19,12 +19,12 @@ In your "device code":
 
 CMake is a bit different of course. You have to link with libfakeOwl.{a|dylib} and you want to check out the macro `fake_owl_compile_and_embed` in [cmake/configure_fake_owl.cmake](/cmake/configure_fake_owl.cmake). With my cmake version (3.19.1) that macro would fail if being passed `.cu` files, therefore I'm renaming the files where the optix device programs would usually go to `.cpp` (another option would be to use symlinks).
 
-That's mostly it. _Some_ platform-specific CUDA stuff works, but most (obviously) doesn't. Have a look in the [fake/cuda.h](/include/fake/cuda.h) and [fake/optix.h](/include/fake/optix.h) files. The OptiX functions should _eventually_ be ported in their entirety but the CUDA stuff is only there for convenience. BTW, there is a `clock64()` implementation in `fake/cuda.h` that you should use instead of `clock()` on x86, as the latter will perform syscalls and is awfully slow (some of the owl samples use `clock()`).
+That's mostly it. _Some_ platform-specific CUDA stuff works, but most (obviously) doesn't. Have a look at the [fake/cuda.h](/include/owl/fakeOwl/fake/cuda.h) and [fakeOwl/optix.h](/include/owl/fakeOwl/fake/optix.h) files. The OptiX functions should _eventually_ be ported in their entirety but the CUDA stuff is only there for convenience. BTW, there is a `clock64()` implementation in `fake/cuda.h` that you should use instead of `clock()` on x86, as the latter will perform syscalls and is awfully slow (some of the owl samples use `clock()`).
 
 OWL compatibility
 -----------------
 
-fakeOwl is based off of stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/owl-project/owl/tree/master/owl/include/owl). The current fakeOwl version is based on the commit `8c4d5f1ea0cc2a1974ed8111381c1d26e6417af8` (OWL master as of Tue Apr 18 13:37:02 2023 -0600). See [fake/verision.h](/include/fake/version.h) for details.
+fakeOwl is based off of stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/owl-project/owl/tree/master/owl/include/owl). The current fakeOwl version is based on the commit `8c4d5f1ea0cc2a1974ed8111381c1d26e6417af8` (OWL master as of Tue Apr 18 13:37:02 2023 -0600). See [fake/version.h](/include/owl/fakeOwl/fake/version.h) for details.
 
 License
 -------
