@@ -3,7 +3,8 @@ macro(fake_owl_compile_and_embed output_var file)
     set(multiArgs LINK_LIBRARIES)
     cmake_parse_arguments(ARG "" "" "${multiArgs}" ${ARGN})
 
-    set(targetName ${file})
+    get_filename_component(basefile ${file} NAME)
+    set(targetName ${basefile})
 
     if (TARGET ${targetName})
         message("Target ${targetName} exists. Creating unique name to satisfy cmake...")
