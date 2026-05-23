@@ -123,6 +123,7 @@ install(FILES
 
 set(CPACK_PACKAGE_NAME "fakeOWL")
 set(CPACK_PACKAGE_VENDOR "Stefan Zellmann")
+set(CPACK_PACKAGE_CONTACT "Stefan Zellmann")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "fakeOWL, CPU emulation layer for OptiX and OWL")
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 include(CPack)
