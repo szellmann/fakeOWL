@@ -74,6 +74,7 @@ add_library(owl::owl ALIAS owl)
 # =========================================================
 
 include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
 
 configure_package_config_file(
     "${PROJECT_SOURCE_DIR}/cmake/owlConfig.cmake.in"
