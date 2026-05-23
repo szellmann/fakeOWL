@@ -120,5 +120,10 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/owl
 )
 
+set(CPACK_PACKAGE_NAME "fakeOWL")
+set(CPACK_PACKAGE_VENDOR "Stefan Zellmann")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "fakeOWL, CPU emulation layer for OptiX and OWL")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+include(CPack)
 
 
