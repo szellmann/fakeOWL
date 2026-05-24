@@ -30,7 +30,6 @@ namespace fake
         {
             ManagedResource resource = GetManagedResource(resourceHandles[i]);
             FAKE_LOG_DBG << "Releasing resource handle " << i << " from context";
-            delete resource;
             UnregisterManagedResource(resourceHandles[i]);
         }
     }
@@ -260,7 +259,6 @@ namespace fake
                                           resource->resourceHandle),
                               resourceHandles.end());
         UnregisterManagedResource(resource->resourceHandle);
-        delete resource;
     }
 
 }
