@@ -189,6 +189,8 @@ owlBufferResize(OWLBuffer buffer,
 OWL_API size_t
 owlBufferSizeInBytes(OWLBuffer buffer)
 {
+    Buffer* buf = (Buffer*)buffer;
+    return buf->getSizeInBytes();
 }
 
 OWL_API void

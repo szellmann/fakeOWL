@@ -261,6 +261,7 @@ void prepareTexture(visionaray::texture<T,1>& tex, const cudaTextureDesc& desc)
 
 cudaError_t cudaDestroyTextureObject(cudaTextureObject_t texObject)
 {
+    return cudaSuccess;
 }
 
 cudaError_t cudaMallocArray(cudaArray_t* array,
