@@ -10,16 +10,16 @@ Porting existing OWL code
 
 I'm currently only supporting a subset of OWL and adding features only as needed for my own projects. Also note that OWL CPU programs are pretty slow due to certain conceptual limitations (mostly function call overhead and costly access to TLS). So it's mostly useful for debugging and similar.
 
-The following changes are necessary to an existing code base at the very least:
+At least the following changes are required to port an existing code base:
 
 Replace `owlXXXBufferCreate()` with `owlBufferCreateEXT()` from [owl_ext.h](/include/owl/owl_ext.h) (uses malloc/free instead of cudaMalloc et al.).
 
 The device code _should_ mostly just work. See the comments on CUDA below, and it _might_ be necessary to shuffle some headers around in case that declarations are slightly different than in _real_ OptiX.
 In your "device code":
 
-CMake is a bit different of course. You have to link with libfakeOwl.{a|dylib} and you want to check out the macro `fake_owl_compile_and_embed` in [cmake/configure_fake_owl.cmake](/cmake/configure_fake_owl.cmake). With my cmake version (3.19.1) that macro would fail if being passed `.cu` files, therefore I'm renaming the files where the optix device programs would usually go to `.cpp` (another option would be to use symlinks).
+CMake is a bit different of course. You have to link with libfakeOwl.{a|dylib} and you want to check out the macro `fake_owl_compile_and_embed` in [cmake/configure_fake_owl.cmake](/cmake/configure_fake_owl.cmake). With my cmake version (3.19.1) that macro would fail if being passed `.cu` files, therefore I'm renaming the files where the optix device programs would usually go to `.cpp` (alternative, one could use symlinks, or compile with option `-xc++`).
 
-That's mostly it. _Some_ platform-specific CUDA stuff works, but most (obviously) doesn't. Have a look at the [fake/cuda.h](/include/owl/fakeOwl/fake/cuda.h) and [fakeOwl/optix.h](/include/owl/fakeOwl/fake/optix.h) files. The OptiX functions should _eventually_ be ported in their entirety but the CUDA stuff is only there for convenience. BTW, there is a `clock64()` implementation in `fake/cuda.h` that you should use instead of `clock()` on x86, as the latter will perform syscalls and is awfully slow (some of the owl samples use `clock()`).
+That's mostly it. _Some_ platform-specific CUDA stuff works, but most of it (obviously) doesn't. Have a look at the [fake/cuda.h](/include/owl/fakeOwl/fake/cuda.h) and [fakeOwl/optix.h](/include/owl/fakeOwl/fake/optix.h) files. The OptiX functions should _eventually_ be ported in their entirety but the CUDA stuff is only there for convenience. BTW, there is a `clock64()` implementation in `fake/cuda.h` that you should use instead of `clock()` on x86, as the latter will perform syscalls and is awfully slow (some of the owl samples use `clock()`).
 
 OWL compatibility
 -----------------
