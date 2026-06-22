@@ -11,7 +11,7 @@ namespace fake
     class RayGen : public Program, public VarDecl
     {
     public:
-        RayGen(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars);
+        RayGen(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars);
 
         void launch(int dims, Params* params = nullptr);
 

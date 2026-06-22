@@ -1,18 +1,7 @@
-// ======================================================================== //
-// Copyright 2018-2019 Ingo Wald                                            //
-//                                                                          //
-// Licensed under the Apache License, Version 2.0 (the "License");          //
-// you may not use this file except in compliance with the License.         //
-// You may obtain a copy of the License at                                  //
-//                                                                          //
-//     http://www.apache.org/licenses/LICENSE-2.0                           //
-//                                                                          //
-// Unless required by applicable law or agreed to in writing, software      //
-// distributed under the License is distributed on an "AS IS" BASIS,        //
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. //
-// See the License for the specific language governing permissions and      //
-// limitations under the License.                                           //
-// ======================================================================== //
+// SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+
 
 #pragma once
 
@@ -26,36 +15,67 @@ namespace owl {
     // =======================================================
 
     template<typename T, int N> inline __both__
-    bool any_less_than(const vec_t<T,N> &a, const vec_t<T,N> &b)
-    { //return common::any(lt(a,b)); 
-      for (int i = 0; i < N; i++) if (a[i] < b[i]) return true;
-      return false;
-    }
-  
-    template<typename T, int N> inline __both__
-    bool all_less_than(const vec_t<T,N> &a, const vec_t<T,N> &b)
-    { //return common::all(lt(a,b)); 
-      for (int i = 0; i < N; i++) if (!(a[i] < b[i])) return false;
-      return true;
-    }
-  
-    template<typename T, int N> inline __both__
-    bool any_greater_than(const vec_t<T,N> &a, const vec_t<T,N> &b)
-    { 
-      for (int i = 0; i < N; i++) if (a[i] > b[i]) return true;
-      return false;
-      //		return common::any(gt(a,b)); 
-    }
+    bool any_less_than(const vec_t<T,N> &a, const vec_t<T,N> &b);
 
-    /*! particularly useful for doing some range testing as in "if
-      (any_greater_or_equal(pixelID,frameBufferSize)" etc */
     template<typename T, int N> inline __both__
-    bool any_greater_or_equal(const vec_t<T,N> &a, const vec_t<T,N> &b)
-    { 
-      for (int i = 0; i < N; i++) if ((a[i] >= b[i])) return true;
-      return false;
-      //		return common::any(ge(a,b)); 
-    }
+    bool all_less_than(const vec_t<T,N> &a, const vec_t<T,N> &b);
+
+    template<typename T, int N> inline __both__
+    bool any_greater_or_equal(const vec_t<T,N> &a, const vec_t<T,N> &b);
+
+    template<typename T, int N> inline __both__
+    bool any_less_than(const vec_t<T,N> &a, const vec_t<T,N> &b);
+
+    // ----------- specialization for 2 -----------
+    template<typename T> inline __both__
+    bool any_less_than(const vec_t<T,2> &a, const vec_t<T,2> &b)
+    { return (a.x < b.x) | (a.y < b.y); }
+  
+    template<typename T> inline __both__
+    bool all_less_than(const vec_t<T,2> &a, const vec_t<T,2> &b)
+    { return (a.x < b.x) & (a.y < b.y); }
+  
+    template<typename T> inline __both__
+    bool any_greater_than(const vec_t<T,2> &a, const vec_t<T,2> &b)
+    { return (a.x > b.x) | (a.y > b.y); }
+
+    template<typename T> inline __both__
+    bool any_greater_or_equal(const vec_t<T,2> &a, const vec_t<T,2> &b)
+    { return (a.x >= b.x) | (a.y >= b.y); }
+
+    // ----------- specialization for 3 -----------
+    template<typename T> inline __both__
+    bool any_less_than(const vec_t<T,3> &a, const vec_t<T,3> &b)
+    { return (a.x < b.x) | (a.y < b.y) | (a.z < b.z); }
+  
+    template<typename T> inline __both__
+    bool all_less_than(const vec_t<T,3> &a, const vec_t<T,3> &b)
+    { return (a.x < b.x) & (a.y < b.y) & (a.z < b.z); }
+  
+    template<typename T> inline __both__
+    bool any_greater_than(const vec_t<T,3> &a, const vec_t<T,3> &b)
+    { return (a.x > b.x) | (a.y > b.y) | (a.z > b.z); }
+
+    template<typename T> inline __both__
+    bool any_greater_or_equal(const vec_t<T,3> &a, const vec_t<T,3> &b)
+    { return (a.x >= b.x) | (a.y >= b.y) | (a.z >= b.z); }
+
+    // ----------- specialization for 4 -----------
+    template<typename T> inline __both__
+    bool any_less_than(const vec_t<T,4> &a, const vec_t<T,4> &b)
+    { return (a.x < b.x) | (a.y < b.y) | (a.z < b.z) | (a.w < b.w); }
+  
+    template<typename T> inline __both__
+    bool all_less_than(const vec_t<T,4> &a, const vec_t<T,4> &b)
+    { return (a.x < b.x) & (a.y < b.y) & (a.z < b.z) & (a.w < b.w); }
+  
+    template<typename T> inline __both__
+    bool any_greater_than(const vec_t<T,4> &a, const vec_t<T,4> &b)
+    { return (a.x > b.x) | (a.y > b.y) | (a.z > b.z) | (a.w > b.w); }
+
+    template<typename T> inline __both__
+    bool any_greater_or_equal(const vec_t<T,4> &a, const vec_t<T,4> &b)
+    { return (a.x >= b.x) | (a.y >= b.y) | (a.z >= b.z) | (a.w >= b.w); }
 
     // -------------------------------------------------------
     // unary functors
@@ -90,13 +110,6 @@ namespace owl {
     // -------------------------------------------------------
     // binary functors
     // -------------------------------------------------------
-    // template<typename T>
-    // __both__ vec_t<T,2> divRoundUp(const vec_t<T,2> &a, const vec_t<T,2> &b)
-    // { return vec_t<T,2>(divRoundUp(a.x,b.x),divRoundUp(a.y,b.y)); }
-  
-    // template<typename T>
-    // __both__ vec_t<T,3> divRoundUp(const vec_t<T,3> &a, const vec_t<T,3> &b)
-    // { return vec_t<T,3>(divRoundUp(a.x,b.x),divRoundUp(a.y,b.y),divRoundUp(a.z,b.z)); }
 
 #define _define_binary_functor(fct)                                     \
     template<typename T>                                                \

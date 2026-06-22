@@ -3,7 +3,7 @@
 
 namespace fake
 {
-    Miss::Miss(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars)
+    Miss::Miss(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars)
         : VarDecl(sizeOfVarStruct, vars, numVars)
     {
     }

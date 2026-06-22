@@ -95,9 +95,9 @@ namespace fake
         return module;
     }
 
-    Params* Context::createParams(std::size_t  sizeOfVarStruct,
-                                  OWLVarDecl  *vars,
-                                  int          numVars)
+    Params* Context::createParams(std::size_t        sizeOfVarStruct,
+                                  const OWLVarDecl  *vars,
+                                  int                numVars)
     {
         FAKE_LOG_DBG << "Creating params, sizeOfVarStruct: "
                       << sizeOfVarStruct<< ", numVars: " << numVars;
@@ -156,10 +156,10 @@ namespace fake
         return texture;
     }
 
-    GeomType* Context::createGeomType(OWLGeomKind  kind,
-                                      std::size_t  sizeOfVarStruct,
-                                      OWLVarDecl  *vars,
-                                      int          numVars)
+    GeomType* Context::createGeomType(OWLGeomKind        kind,
+                                      std::size_t        sizeOfVarStruct,
+                                      const OWLVarDecl  *vars,
+                                      int                numVars)
     {
         FAKE_LOG_DBG << "Creating geom type (kind: " << kind << "), sizeOfVarStruct: "
                       << sizeOfVarStruct<< ", numVars: " << numVars;

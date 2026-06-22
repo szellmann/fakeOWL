@@ -1,18 +1,7 @@
-// ======================================================================== //
-// Copyright 2018-2023 Ingo Wald                                            //
-//                                                                          //
-// Licensed under the Apache License, Version 2.0 (the "License");          //
-// you may not use this file except in compliance with the License.         //
-// You may obtain a copy of the License at                                  //
-//                                                                          //
-//     http://www.apache.org/licenses/LICENSE-2.0                           //
-//                                                                          //
-// Unless required by applicable law or agreed to in writing, software      //
-// distributed under the License is distributed on an "AS IS" BASIS,        //
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. //
-// See the License for the specific language governing permissions and      //
-// limitations under the License.                                           //
-// ======================================================================== //
+// SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+
 
 /* pieces originally taken from optixPathTracer/random.h example,
    under following license */
@@ -62,6 +51,11 @@ namespace owl {
       }
       inline __both__ LCG(unsigned int val0, unsigned int val1)
       { init(val0,val1); }
+
+      inline __both__ LCG(uint64_t hash)
+      {
+        init(hash>>32,uint32_t(hash));
+      }
 
       inline __both__ LCG(const vec2i &seed)
       { init((unsigned)seed.x,(unsigned)seed.y); }

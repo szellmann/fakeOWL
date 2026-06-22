@@ -63,8 +63,10 @@ add_library(owl ${HEADERS} ${SOURCES})
 target_link_libraries(owl PUBLIC ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 target_include_directories(owl INTERFACE
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/owl>
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/owl/fakeOwl>
   $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:include/owl>
   $<INSTALL_INTERFACE:include/owl/fakeOwl>
 )
 add_library(owl::owl ALIAS owl)
@@ -100,6 +102,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/owl
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     COMPONENT headers
     FILES_MATCHING
+        PATTERN "*.*" EXCLUDE
         PATTERN "*.h"
         PATTERN "*.hh"
         PATTERN "*.hpp"
@@ -107,6 +110,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/owl
         PATTERN "*.inl"
         PATTERN "*.inc"
         PATTERN "*.cuh"
+        REGEX "^[^.]+$" # include files w/o ending (e.g., limits)
 )
 
 install(EXPORT owl_Exports

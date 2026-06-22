@@ -108,6 +108,8 @@ inline float __saturatef(const float &f)
 }
 #endif
 
+inline float saturate(const float &f) { return __saturatef(f); }
+
 namespace fake
 {
     static thread_local cudaError_t lastCudaError = cudaSuccess;

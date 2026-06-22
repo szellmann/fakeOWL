@@ -43,14 +43,14 @@ namespace fake
 
         Module* createModule(const char* lib);
 
-        Params* createParams(std::size_t  sizeOfVarStruct,
-                             OWLVarDecl  *vars,
-                             int          numVars);
+        Params* createParams(std::size_t        sizeOfVarStruct,
+                             const OWLVarDecl  *vars,
+                             int                numVars);
 
-        GeomType* createGeomType(OWLGeomKind  kind,
-                                 std::size_t  sizeOfVarStruct,
-                                 OWLVarDecl  *vars,
-                                 int          numVars);
+        GeomType* createGeomType(OWLGeomKind        kind,
+                                 std::size_t        sizeOfVarStruct,
+                                 const OWLVarDecl  *vars,
+                                 int                numVars);
 
         Texture* createTexture(OWLTexelFormat         texelFormat,
                                uint32_t               size_x,

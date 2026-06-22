@@ -1,18 +1,7 @@
-// ======================================================================== //
-// Copyright 2018-2019 Ingo Wald                                            //
-//                                                                          //
-// Licensed under the Apache License, Version 2.0 (the "License");          //
-// you may not use this file except in compliance with the License.         //
-// You may obtain a copy of the License at                                  //
-//                                                                          //
-//     http://www.apache.org/licenses/LICENSE-2.0                           //
-//                                                                          //
-// Unless required by applicable law or agreed to in writing, software      //
-// distributed under the License is distributed on an "AS IS" BASIS,        //
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. //
-// See the License for the specific language governing permissions and      //
-// limitations under the License.                                           //
-// ======================================================================== //
+// SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+
 
 #pragma once
 
@@ -87,7 +76,7 @@ namespace owl {
     }
   
     template<typename TASK_T>
-    void parallel_for_blocked(size_t begin, size_t end, size_t blockSize,
+    void parallel_for_blocked(size_t begin, size_t end, int blockSize,
                               const TASK_T &taskFunction)
     {
 #if 0
@@ -101,6 +90,22 @@ namespace owl {
         });
 #endif
     }
-  
+
+    template<typename TASK_T>
+    void parallel_for_blocked(int begin, int end, int blockSize,
+        const TASK_T& taskFunction)
+    {
+#if 0
+        serial_for_blocked(begin, end, blockSize, taskFunction);
+#else
+        const int numTasks = end - begin;
+        const int numBlocks = (numTasks + blockSize - 1) / blockSize;
+        parallel_for(numBlocks, [&](int blockID) {
+            int block_begin = begin + blockID * blockSize;
+            taskFunction(block_begin, std::min(block_begin + blockSize, end));
+            });
+#endif
+    }
+
   } // ::owl::common
 } // ::owl

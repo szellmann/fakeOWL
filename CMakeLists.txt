@@ -12,6 +12,7 @@ option(BUILD_SHARED_LIBS "Build all libraries as shared libraries instead of sta
 option(FAKE_OWL_BUILD_SAMPLES "Build the Samples?" OFF)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/owl)
 include_directories(${PROJECT_SOURCE_DIR}/include/owl/fakeOwl)
 include_directories(${PROJECT_SOURCE_DIR}/submodules/visionaray/include)
 

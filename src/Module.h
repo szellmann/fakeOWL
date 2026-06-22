@@ -22,7 +22,7 @@ namespace fake
 
         Program* createProgram(Program::Type pt, const char* name,
                                std::size_t sizeOfVarStruct = 0,
-                               OWLVarDecl* vars = nullptr,
+                               const OWLVarDecl* vars = nullptr,
                                int numVars = 0);
         void releaseProgram(Program* program);
 

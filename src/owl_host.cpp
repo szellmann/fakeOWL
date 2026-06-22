@@ -97,12 +97,12 @@ owlLaunch2D(OWLRayGen rayGen,
 }
 
 OWL_API OWLRayGen
-owlRayGenCreate(OWLContext  context,
-                OWLModule   module,
-                const char *programName,
-                size_t      sizeOfVarStruct,
-                OWLVarDecl *vars,
-                int         numVars)
+owlRayGenCreate(OWLContext        context,
+                OWLModule         module,
+                const char       *programName,
+                size_t            sizeOfVarStruct,
+                const OWLVarDecl *vars,
+                int               numVars)
 {
     (void)context;
     Module* mdl = (Module*)module;
@@ -111,12 +111,12 @@ owlRayGenCreate(OWLContext  context,
 }
 
 OWL_API OWLMissProg
-owlMissProgCreate(OWLContext  context,
-                  OWLModule   module,
-                  const char *programName,
-                  size_t      sizeOfVarStruct,
-                  OWLVarDecl *vars,
-                  int         numVars)
+owlMissProgCreate(OWLContext        context,
+                  OWLModule         module,
+                  const char       *programName,
+                  size_t            sizeOfVarStruct,
+                  const OWLVarDecl *vars,
+                  int               numVars)
 {
     (void) context;
     Module* mdl = (Module*)module;
@@ -229,8 +229,8 @@ OWL_API OWLGeomType
 owlGeomTypeCreate(OWLContext context,
                   OWLGeomKind kind,
                   size_t sizeOfVarStruct,
-                  OWLVarDecl *vars,
-                  int         numVars)
+                  const OWLVarDecl *vars,
+                  int               numVars)
 {
     Context* ctx = (Context*)context;
     return (OWLGeomType)ctx->createGeomType(kind, sizeOfVarStruct,
@@ -244,17 +244,24 @@ owlTexture2DCreate(OWLContext context,
                    uint32_t size_y,
                    const void *texels,
                    OWLTextureFilterMode filterMode,
-                   OWLTextureAddressMode addressMode,
+                   OWLTextureAddressMode addressMode_x,
+                   OWLTextureAddressMode addressMode_y,
                    OWLTextureColorSpace colorSpace,
                    uint32_t linePitchInBytes)
 {
+    if (addressMode_x != addressMode_y) {
+        FAKE_LOG(fake::logging::Level::Warning)
+            << "separate address modes for x/y not supported yet -- "
+            << "defaulting to addressMode_x for both dims";
+    }
+
     Context* ctx = (Context*)context;
     return (OWLTexture)ctx->createTexture(texelFormat,
                                           size_x,
                                           size_y,
                                           texels,
                                           filterMode,
-                                          addressMode,
+                                          addressMode_x,
                                           colorSpace,
                                           linePitchInBytes);
 }
@@ -311,10 +318,10 @@ owlGeomTypeSetBoundsProg(OWLGeomType type,
 }
 
 OWL_API OWLParams
-owlParamsCreate(OWLContext  context,
-                size_t      sizeOfVarStruct,
-                OWLVarDecl *vars,
-                int         numVars)
+owlParamsCreate(OWLContext        context,
+                size_t            sizeOfVarStruct,
+                const OWLVarDecl *vars,
+                int               numVars)
 {
     Context* ctx = (Context*)context;
     return (OWLParams)ctx->createParams(sizeOfVarStruct,
@@ -364,8 +371,14 @@ owlInstanceGroupCreate(OWLContext context,
                        const uint32_t *initInstanceIDs,
                        const float    *initTransforms,
                        OWLMatrixFormat matrixFormat,
-                       unsigned        buldFlags)
+                       unsigned        buildFlags,
+                       bool            useInstanceProgram)
 {
+    if (useInstanceProgram) {
+        FAKE_LOG(fake::logging::Level::Warning)
+            << "owlInstanceGroupCreate: instance progs not supported yet";
+    }
+
     Context* ctx = (Context*)context;
     return (OWLGroup)ctx->createInstanceGroup(numInstances,
                                               initGroups,
@@ -415,14 +428,24 @@ owlInstanceGroupSetTransform(OWLGroup group,
     ig->setTransform(whichChild, floats, matrixFormat);
 }
 
-OWL_API void owlGroupBuildAccel(OWLGroup group)
+OWL_API void owlGroupBuildAccel(OWLGroup group, OWLParams params)
 {
+    if (params) {
+        FAKE_LOG(fake::logging::Level::Warning)
+            << "owlGroupBuildAccel: params are not null but we ignore them";
+    }
+
     Group* grp = (Group*)group;
     grp->buildAccel();
 }
 
-OWL_API void owlGroupRefitAccel(OWLGroup group)
+OWL_API void owlGroupRefitAccel(OWLGroup group, OWLParams params)
 {
+    if (params) {
+        FAKE_LOG(fake::logging::Level::Warning)
+            << "owlGroupRefitAccel: params are not null but we ignore them";
+    }
+
     Group* grp = (Group*)group;
     grp->refitAccel();
 }
@@ -657,7 +680,8 @@ owlGeomSetBuffer(OWLGeom     obj,
 OWL_API void
 owlGeomSetRaw(OWLGeom    obj,
               const char  *name,
-              const void *val)
+              const void *val,
+              int devicID)
 {
     if (!obj) return;
     Geom* geom = (Geom*)obj;
@@ -1021,7 +1045,8 @@ owlParamsSetPointer(OWLParams    obj,
 OWL_API void
 owlParamsSetRaw(OWLParams  obj,
               const char  *name,
-              const void *val)
+              const void *val,
+              int devID)
 {
     if (!obj) return;
     Params* params = (Params*)obj;

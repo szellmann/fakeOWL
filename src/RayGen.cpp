@@ -13,7 +13,7 @@ void* optixLaunchParams;
 
 namespace fake
 {
-    RayGen::RayGen(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars)
+    RayGen::RayGen(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars)
         : VarDecl(sizeOfVarStruct, vars, numVars)
     {
     }

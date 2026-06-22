@@ -1,18 +1,7 @@
-// ======================================================================== //
-// Copyright 2018-2020 Ingo Wald                                            //
-//                                                                          //
-// Licensed under the Apache License, Version 2.0 (the "License");          //
-// you may not use this file except in compliance with the License.         //
-// You may obtain a copy of the License at                                  //
-//                                                                          //
-//     http://www.apache.org/licenses/LICENSE-2.0                           //
-//                                                                          //
-// Unless required by applicable law or agreed to in writing, software      //
-// distributed under the License is distributed on an "AS IS" BASIS,        //
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. //
-// See the License for the specific language governing permissions and      //
-// limitations under the License.                                           //
-// ======================================================================== //
+// SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+
 
 #pragma once
 
@@ -30,7 +19,7 @@ namespace owl {
     template<> struct long_type_of<uint32_t> { typedef uint64_t type; };
   
     template<typename T, int N>
-    struct OWL_INTERFACE vec_t { T t[N]; };
+    struct vec_t { T t[N]; };
 
 
     template<typename ScalarTypeA, typename ScalarTypeB> struct BinaryOpResultType;
@@ -54,7 +43,7 @@ namespace owl {
     // vector, so we can use it in, say, box1f
     // ------------------------------------------------------------------
     template<typename T>
-    struct OWL_INTERFACE vec_t<T,1> {
+    struct vec_t<T,1> {
       enum { dims = 1 };
       typedef T scalar_t;
     
@@ -93,14 +82,14 @@ namespace owl {
     // vec2
     // ------------------------------------------------------------------
     template<typename T>
-    struct OWL_INTERFACE vec_t<T,2> {
+    struct vec_t<T,2> {
       enum { dims = 2 };
       typedef T scalar_t;
     
       inline __both__ vec_t() {}
       inline __both__ vec_t(const T &t) : x(t), y(t) {}
       inline __both__ vec_t(const T &x, const T &y) : x(x), y(y) {}
-#ifdef __CUDACC__
+#if defined(__CUDACC__)
       inline __both__ vec_t(const float2 v) : x(v.x), y(v.y) {}
       inline __both__ vec_t(const int2 v) : x(v.x), y(v.y) {}
       inline __both__ vec_t(const uint2 v) : x(v.x), y(v.y) {}
@@ -140,7 +129,7 @@ namespace owl {
     // vec3
     // ------------------------------------------------------------------
     template<typename T>
-    struct OWL_INTERFACE vec_t<T,3> {
+    struct vec_t<T,3> {
       enum { dims = 3 };
       typedef T scalar_t;
     
@@ -149,7 +138,7 @@ namespace owl {
       inline __both__ vec_t() {}
       inline __both__ vec_t(const T &t) : x(t), y(t), z(t) {}
       inline __both__ vec_t(const T &_x, const T &_y, const T &_z) : x(_x), y(_y), z(_z) {}
-#ifdef __CUDACC__
+#if defined(__CUDACC__)
       inline __both__ vec_t(const int3 &v)   : x(v.x), y(v.y), z(v.z) {}
       inline __both__ vec_t(const uint3 &v)  : x(v.x), y(v.y), z(v.z) {}
       inline __both__ vec_t(const float3 &v) : x(v.x), y(v.y), z(v.z) {}
@@ -203,11 +192,11 @@ namespace owl {
     // vec3a
     // ------------------------------------------------------------------
     template<typename T>
-    struct OWL_INTERFACE OWL_ALIGN(16) vec3a_t : public vec_t<T,3> {
+    struct OWL_ALIGN(16) vec3a_t : public vec_t<T,3> {
       inline vec3a_t() {}
       inline vec3a_t(const T &t) : vec_t<T,3>(t) {}
       inline vec3a_t(const T &x, const T &y, const T &z) : vec_t<T,3>(x,y,z) {}
-#ifdef __CUDACC__
+#if defined(__CUDACC__)
       inline __both__ vec3a_t(const int3 &v) : vec_t<T,3>(v) {};
       inline __both__ vec3a_t(const uint3 &v) : vec_t<T,3>(v) {};
       inline __both__ vec3a_t(const float3 &v) : vec_t<T,3>(v) {};
@@ -227,7 +216,7 @@ namespace owl {
     // vec4
     // ------------------------------------------------------------------
     template<typename T>
-    struct OWL_INTERFACE vec_t<T,4> {
+    struct vec_t<T,4> {
       enum { dims = 4 };
       typedef T scalar_t;
     
@@ -243,7 +232,7 @@ namespace owl {
         : x(_x), y(_y), z(_z), w(_w)
       {}
     
-#ifdef __CUDACC__
+#if defined(__CUDACC__)
       inline __both__ vec_t(const float4 &v)
         : x(v.x), y(v.y), z(v.z), w(v.w)
         {}
@@ -394,25 +383,25 @@ namespace owl {
     // default instantiations
     // =======================================================
   
-#define _define_vec_types(T,t)                  \
+#define define_vec_types(T,t)                  \
     using vec2##t = vec_t<T,2>;                 \
     using vec3##t = vec_t<T,3>;                 \
     using vec4##t = vec_t<T,4>;                 \
-    using vec3##t##a = vec3a_t<T>;              \
+    using vec3##t##a = vec3a_t<T>;              
   
-    _define_vec_types(bool ,b);
-    _define_vec_types(int8_t ,c);
-    _define_vec_types(int16_t ,s);
-    _define_vec_types(int32_t ,i);
-    _define_vec_types(int64_t ,l);
-    _define_vec_types(uint8_t ,uc);
-    _define_vec_types(uint16_t,us);
-    _define_vec_types(uint32_t,ui);
-    _define_vec_types(uint64_t,ul);
-    _define_vec_types(float,f);
-    _define_vec_types(double,d);
+    define_vec_types(bool ,b);
+    define_vec_types(int8_t ,c);
+    define_vec_types(int16_t ,s);
+    define_vec_types(int32_t ,i);
+    define_vec_types(int64_t ,l);
+    define_vec_types(uint8_t ,uc);
+    define_vec_types(uint16_t,us);
+    define_vec_types(uint32_t,ui);
+    define_vec_types(uint64_t,ul);
+    define_vec_types(float,f);
+    define_vec_types(double,d);
   
-#undef _define_vec_types
+#undef define_vec_types
 
     inline __both__ vec_t<bool,3> ge(const vec3f &a, const vec3f &b)
     { return { a.x >= b.x, a.y >= b.y, a.z >= b.z }; }
@@ -421,7 +410,7 @@ namespace owl {
     { return { a.x < b.x, a.y < b.y, a.z < b.z }; }
 
     inline __both__ bool any(vec_t<bool,3> v)
-    { return v.x | v.y | v.z; }
+    { return v.x || v.y || v.z; }
     
     
   } // ::owl::common

@@ -1,18 +1,7 @@
-// ======================================================================== //
-// Copyright 2018-2019 Ingo Wald                                            //
-//                                                                          //
-// Licensed under the Apache License, Version 2.0 (the "License");          //
-// you may not use this file except in compliance with the License.         //
-// You may obtain a copy of the License at                                  //
-//                                                                          //
-//     http://www.apache.org/licenses/LICENSE-2.0                           //
-//                                                                          //
-// Unless required by applicable law or agreed to in writing, software      //
-// distributed under the License is distributed on an "AS IS" BASIS,        //
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. //
-// See the License for the specific language governing permissions and      //
-// limitations under the License.                                           //
-// ======================================================================== //
+// SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+
 
 /* originally taken (and adapted) from ospray, under following license */
 
@@ -44,7 +33,7 @@ namespace owl {
     /// 2D Linear Transform (2x2 Matrix)
     ////////////////////////////////////////////////////////////////////////////////
 
-    template<typename T> struct OWL_INTERFACE LinearSpace2
+    template<typename T> struct LinearSpace2
     {
       using vector_t = T;
       // using Scalar = typename T::scalar_t;
@@ -181,7 +170,7 @@ namespace owl {
     ////////////////////////////////////////////////////////////////////////////////
 
     template<typename T> 
-    struct OWL_INTERFACE LinearSpace3
+    struct LinearSpace3
     {
       // using vector_t = T;
       using scalar_t = typename T::scalar_t;
@@ -283,13 +272,13 @@ namespace owl {
                                        (a.vz.y-a.vy.z)/s,
                                        (a.vx.z-a.vz.x)/s,
                                        (a.vy.x-a.vx.y)/s);
-        } else if (arg_min(diag) == 0) {
+        } else if (arg_max(diag) == 0) {
           scalar_t s = owl::common::polymorphic::sqrt(1.f+diag.x-diag.y-diag.z)*2.f;
           return QuaternionT<scalar_t>((a.vz.y-a.vy.z)/s,
                                        .25f * s,
                                        (a.vx.y-a.vy.x)/s,
                                        (a.vx.z-a.vz.x)/s);
-        } else if (arg_min(diag) == 1) {
+        } else if (arg_max(diag) == 1) {
           scalar_t s = owl::common::polymorphic::sqrt(1.f+diag.y-diag.x-diag.z)*2.f;
           return QuaternionT<scalar_t>((a.vx.z-a.vz.x)/s,
                                        (a.vx.y-a.vy.x)/s,

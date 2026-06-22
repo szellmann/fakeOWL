@@ -6,7 +6,7 @@
 
 namespace fake
 {
-    GeomType::GeomType(OWLGeomKind kind, std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars)
+    GeomType::GeomType(OWLGeomKind kind, std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars)
         : VarDecl(sizeOfVarStruct, vars, numVars)
         , kind(kind)
     {

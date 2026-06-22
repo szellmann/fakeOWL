@@ -9,7 +9,7 @@ namespace fake
     class Miss : public Program, public VarDecl
     {
     public:
-        Miss(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars);
+        Miss(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars);
 
         std::string entryPointPrefix();
 

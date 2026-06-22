@@ -91,7 +91,7 @@ namespace fake
 
     Program* Module::createProgram(Program::Type pt, const char* name,
                                    std::size_t sizeOfVarStruct,
-                                   OWLVarDecl* vars,
+                                   const OWLVarDecl* vars,
                                    int numVars)
     {
         FAKE_LOG_DBG << "Creating program (type " << pt << "): " << name;

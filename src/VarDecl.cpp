@@ -11,7 +11,7 @@
 
 namespace fake
 {
-    VarDecl::VarDecl(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars)
+    VarDecl::VarDecl(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars)
         : dataPtr(new uint8_t[sizeOfVarStruct])
         , sizeOfVarStruct(sizeOfVarStruct)
     {

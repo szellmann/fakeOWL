@@ -22,7 +22,7 @@ namespace fake
     public:
         VarDecl() = default;
 
-        VarDecl(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars);
+        VarDecl(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars);
 
         virtual ~VarDecl();
 

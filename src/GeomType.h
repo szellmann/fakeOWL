@@ -19,7 +19,7 @@ namespace fake
     class GeomType : public ContextResource, private VarDecl // VarDecl is only a template
     {
     public:
-        GeomType(OWLGeomKind kind, std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars);
+        GeomType(OWLGeomKind kind, std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars);
 
         Geom* createGeom();
         void releaseGeom(Geom* geom);

@@ -24,7 +24,7 @@ That's mostly it. _Some_ platform-specific CUDA stuff works, but most (obviously
 OWL compatibility
 -----------------
 
-fakeOwl tracks stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/owl-project/owl/tree/master/owl/include/owl). The current fakeOwl version is based on the commit `8c4d5f1ea0cc2a1974ed8111381c1d26e6417af8` (OWL master as of Tue Apr 18 13:37:02 2023 -0600). See [fake/version.h](/include/owl/fakeOwl/fake/version.h) for details.
+fakeOwl tracks stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/NVIDIA/OWL/tree/main/include/owl). The current fakeOwl version is based on the commit `c1c296c5c7dc00691c309ea4c609797e1bde8c49` (OWL main as of Wed Jun 17 12:28:56 2026 -0600). See [fake/version.h](/include/owl/fakeOwl/fake/version.h) for details.
 
 License
 -------
