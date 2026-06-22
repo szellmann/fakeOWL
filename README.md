@@ -29,5 +29,5 @@ fakeOwl tracks stable OWL releases; the basis for new fakeOwl versions form the 
 License
 -------
 
-MIT if not noted otherwise. I'm including lot's of code that was directly copied from OWL, the license there is Apache 2.
+Apache 2 if not noted otherwise. I'm including lot's of code that was directly copied from OWL, whose license is also Apache 2.
 
