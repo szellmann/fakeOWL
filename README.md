@@ -3,12 +3,12 @@ fake[Owl](https://github.com/owl-project/owl)
 
 A CPU implementation of OWL. Very experimental :-)
 
-The CPU intersections are computed using the [Visionaray](https://github.com/szellmann/visionaray) submodule, but honestly intersections are less than 1% of this library. We could probably use Embree here w/o much effort, but I'm using Visionaray b/c it comes with a nice texture abstraction layer, and I'm also more familiar with Visionaray than with Embree, so I never bothered to replace it so far.
+CPU intersections are computed using the [Visionaray](https://github.com/szellmann/visionaray) submodule, but honestly, intersections make up for less than 1% of this library. We could probably use Embree here w/o much effort, but I'm using Visionaray b/c it comes with a nice texture abstraction layer, and I'm also more familiar with Visionaray than with Embree, so I never bothered to replace it so far.
 
 Porting existing OWL code
 -------------------------
 
-I'm currently only supporting a subset of OWL and adding features only as needed for my own projects. Also note that OWL CPU programs are pretty slow due to certain conceptual limitations (mostly function call overhead and costly access to TLS). So it's mostly useful for debugging etc.
+I'm currently only supporting a subset of OWL and adding features only as needed for my own projects. Also note that OWL CPU programs are pretty slow due to certain conceptual limitations (mostly function call overhead and costly access to TLS). So it's mostly useful for debugging and similar.
 
 The following changes are necessary to an existing code base at the very least:
 
@@ -24,7 +24,7 @@ That's mostly it. _Some_ platform-specific CUDA stuff works, but most (obviously
 OWL compatibility
 -----------------
 
-fakeOwl is based off of stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/owl-project/owl/tree/master/owl/include/owl). The current fakeOwl version is based on the commit `8c4d5f1ea0cc2a1974ed8111381c1d26e6417af8` (OWL master as of Tue Apr 18 13:37:02 2023 -0600). See [fake/version.h](/include/owl/fakeOwl/fake/version.h) for details.
+fakeOwl tracks stable OWL releases; the basis for new fakeOwl versions form the public header files under [include/owl/](https://github.com/owl-project/owl/tree/master/owl/include/owl). The current fakeOwl version is based on the commit `8c4d5f1ea0cc2a1974ed8111381c1d26e6417af8` (OWL master as of Tue Apr 18 13:37:02 2023 -0600). See [fake/version.h](/include/owl/fakeOwl/fake/version.h) for details.
 
 License
 -------
