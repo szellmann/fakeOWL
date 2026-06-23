@@ -9,7 +9,7 @@
 
 #include <owl/owl_host.h>
 
-#include "backend/Visionaray.h"
+#include "visionaray/detail/thread_pool.h"
 
 #include "Buffer.h"
 #include "Resource.h"
@@ -30,7 +30,8 @@ namespace fake
         Context(int* deviceIDs, int numDevices);
        ~Context();
 
-        backend::Visionaray backend;
+        visionaray::thread_pool threadPool{std::thread::hardware_concurrency()};
+
         void buildPrograms();
 
         void setRayTypeCount(int cnt);

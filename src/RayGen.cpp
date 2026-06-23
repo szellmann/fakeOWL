@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-#include <visionaray/detail/parallel_for.h>
+#include "for_each.h"
 
 #include "Context.h"
 #include "Logging.h"
@@ -43,7 +43,7 @@ namespace fake
         // Update all traversables to have a pointer to the current module!
         traversablesSetCurrentModule(module);
 
-        context->backend.parallel_for(0, dims, 256,
+        visionaray::parallel::for_each(context->threadPool, 0, dims,
             [=](int i)
             {
                 void (*entryPoint)();
@@ -100,7 +100,7 @@ namespace fake
         // Update all traversables to have a pointer to the current module!
         traversablesSetCurrentModule(module);
 
-        context->backend.parallel_for(0, w, 16, 0, h, 16,
+        visionaray::parallel::for_each(context->threadPool, 0, w, 0, h,
             [=](int x, int y)
             {
                 void (*entryPoint)();
