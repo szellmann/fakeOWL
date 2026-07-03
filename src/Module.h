@@ -50,6 +50,9 @@ namespace fake
         // Symbol to prepare a closest hit program call
         void* fakePrepareClosestHitSym = nullptr;
 
+        // Symbol to prepare a any hit program call
+        void* fakePrepareAnyHitSym = nullptr;
+
         // Symbol to prepare an intersection program call
         void* fakePrepareMissSym = nullptr;
 

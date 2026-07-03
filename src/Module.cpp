@@ -3,6 +3,7 @@
 
 #include <dlfcn.h>
 
+#include "AnyHit.h"
 #include "Bounds.h"
 #include "ClosestHit.h"
 #include "Intersect.h"
@@ -45,6 +46,12 @@ namespace fake
         if (fakeGetIntersectionResultSym == nullptr)
         {
             FAKE_LOG(fake::logging::Level::Error) << "Missing symbol for fakeGetIntersectionResult(): " << lib;
+        }
+
+        fakePrepareAnyHitSym = dlsym(handle, "fakePrepareAnyHit");
+        if (fakePrepareAnyHitSym == nullptr)
+        {
+            FAKE_LOG(fake::logging::Level::Error) << "Missing symbol for fakePrepareAnyHit(): " << lib;
         }
 
         fakePrepareClosestHitSym = dlsym(handle, "fakePrepareClosestHit");
@@ -103,7 +110,13 @@ namespace fake
 
         if (pt == Program::PtBounds)
             program = new Bounds;
-        if (pt == Program::PtClosestHit)
+        if (pt == Program::PtAnyHit)
+        {
+            program = new AnyHit;
+            AnyHit* ah = (AnyHit*)program;
+            ah->fakePrepareAnyHitSym = fakePrepareAnyHitSym;
+        }
+        else if (pt == Program::PtClosestHit)
         {
             program = new ClosestHit;
             ClosestHit* ch = (ClosestHit*)program;

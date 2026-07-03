@@ -15,6 +15,7 @@
 
 namespace fake
 {
+    class AnyHit;
     class Bounds;
     class ClosestHit;
     class Intersect;
@@ -28,7 +29,7 @@ namespace fake
 
     protected:
         Geom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
-             const std::vector<Program*>& anyHit,
+             const std::vector<AnyHit*>& anyHit,
              const std::vector<ClosestHit*>& closestHit);
         virtual ~Geom();
 
@@ -37,12 +38,13 @@ namespace fake
 
         std::size_t getPrimCount() const;
 
+        AnyHit* getAnyHitProg(int rayType) const;
         ClosestHit* getClosestHitProg(int rayType) const;
 
     protected:
         std::size_t primCount = 0;
 
-        std::vector<Program*> anyHit;
+        std::vector<AnyHit*> anyHit;
         std::vector<ClosestHit*> closestHit;
     };
 
@@ -59,7 +61,7 @@ namespace fake
     private:
         UserGeom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
                  Bounds* bounds,
-                 const std::vector<Program*>& anyHit,
+                 const std::vector<AnyHit*>& anyHit,
                  const std::vector<ClosestHit*>& closestHit,
                  const std::vector<Intersect*>& intersect);
        ~UserGeom();
@@ -92,7 +94,7 @@ namespace fake
 
     private:
         TrianglesGeom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
-                      const std::vector<Program*>& anyHit,
+                      const std::vector<AnyHit*>& anyHit,
                       const std::vector<ClosestHit*>& closestHit);
        ~TrianglesGeom();
 

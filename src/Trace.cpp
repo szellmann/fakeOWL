@@ -10,6 +10,7 @@
 #include <fake/optix.h>
 #include <fake/owl.h>
 
+#include "AnyHit.h"
 #include "ClosestHit.h"
 #include "Miss.h"
 #include "Module.h"
@@ -50,6 +51,74 @@ namespace fake
         return numTraversables;
     }
 }
+
+struct AnyHitIntersector : visionaray::basic_intersector<AnyHitIntersector>
+{
+    template<typename Prim, typename ...Args>
+    VSNRAY_FUNC auto operator()(fake::Ray r, const Prim &prim, Args&&... args)
+        -> decltype(visionaray::intersect(r, prim, std::forward<Args>(args)...))
+    {
+        auto hr = intersect(r, prim, std::forward<Args>(args)...);
+
+        fake::Geom* geom = (fake::Geom*)hr.geom;
+        if (geom == nullptr)
+            return hr;
+
+        fake::AnyHit* ahProg = geom->getAnyHitProg(r.payload->rayType);
+        if (ahProg == nullptr)
+            return hr;
+
+        void (*entryPoint)();
+        entryPoint = (void (*)())ahProg->entryPointSym;
+
+        fake::ProgramState* (*fakePrepareAnyHit)();
+        fakePrepareAnyHit
+                = (fake::ProgramState* (*)())ahProg->fakePrepareAnyHitSym;
+        if (!ahProg->fakePrepareAnyHitSym) return hr;
+
+        void (*fakeResetPreviousProgramState)();
+        fakeResetPreviousProgramState
+                = (void (*)())ahProg->fakeResetPreviousProgramStateSym;
+
+        fake::ProgramState* state = fakePrepareAnyHit();
+        state->primID = hr.prim_id;
+        state->instID = hr.instID;
+        state->triangleBarycentricU = hr.u;
+        state->triangleBarycentricV = hr.v;
+        state->hitKind = hr.hitKind;
+        for (int i = 0; i < 12; ++i)
+        {
+            state->objectToWorldTransform[i] = r.payload->objectToWorldTransform.data()[i];
+            state->worldToObjectTransform[i] = r.payload->worldToObjectTransform.data()[i];
+        }
+        state->worldRayOrigin[0] = rayOrigin.x;
+        state->worldRayOrigin[1] = rayOrigin.y;
+        state->worldRayOrigin[2] = rayOrigin.z;
+        state->worldRayDirection[0] = rayDirection.x;
+        state->worldRayDirection[1] = rayDirection.y;
+        state->worldRayDirection[2] = rayDirection.z;
+        state->objectRayOrigin[0] = hr.objectRayOrigin.x;
+        state->objectRayOrigin[1] = hr.objectRayOrigin.y;
+        state->objectRayOrigin[2] = hr.objectRayOrigin.z;
+        state->objectRayDirection[0] = hr.objectRayDirection.x;
+        state->objectRayDirection[1] = hr.objectRayDirection.y;
+        state->objectRayDirection[2] = hr.objectRayDirection.z;
+        state->rayTmin = tmin;
+        state->rayTmax = hr.t; // returns hitT in rayTmax
+        state->p0 = *r.payload->p0;
+        state->p1 = *r.payload->p1;
+        state->sbtPointer = geom->dataPtr;
+
+        entryPoint();
+
+        fakeResetPreviousProgramState();
+        return hr;
+    }
+
+    float3 rayOrigin, rayDirection;
+    float tmin;
+};
+
 
 // TODO: at least on macOS, looking up the address of this function
 // from the shared lib is extremely slow (tlv_get_addr(), tl=thread local).
@@ -99,7 +168,19 @@ void optixTrace(OptixTraversableHandle handle,
     fake::HitRecord hr;
 
     GroupBVH::Reference bvh = *(GroupBVH::Reference*)traversable.accessor;
-    hr = intersect(r, bvh);
+
+    if (rayFlags & OPTIX_RAY_FLAG_DISABLE_ANYHIT)
+    {
+        hr = intersect(r, bvh);
+    }
+    else
+    {
+        AnyHitIntersector intersector;
+        intersector.rayOrigin = rayOrigin;
+        intersector.rayDirection = rayDirection;
+        intersector.tmin = tmin;
+        hr = intersector(r, bvh);
+    }
 
     if (hr.hit)
     {

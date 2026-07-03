@@ -61,6 +61,13 @@ extern "C" fake::ProgramState* fakePrepareClosestHit()
     return &fake::programStates[fake::stackPtr];
 }
 
+extern "C" fake::ProgramState* fakePrepareAnyHit()
+{
+    fake::stackPtr++;
+    fake::programStates[fake::stackPtr].type = fake::PtAnyHit;
+    return &fake::programStates[fake::stackPtr];
+}
+
 extern "C" fake::ProgramState* fakePrepareMiss()
 {
     fake::stackPtr++;

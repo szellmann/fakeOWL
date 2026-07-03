@@ -5,6 +5,7 @@
 
 #include <owl/owl_host.h>
 
+#include "AnyHit.h"
 #include "Buffer.h"
 #include "ClosestHit.h"
 #include "Context.h"
@@ -294,9 +295,9 @@ owlGeomTypeSetAnyHit(OWLGeomType type,
                      OWLModule module,
                      const char *progName)
 {
-    // Module* mdl = (Module*)module;
-    // GeomType* gt = (GeomType*)type;
-    // gt->anyHit = mdl->createProgram(Program::PtAnyHit, progName);
+    Module* mdl = (Module*)module;
+    GeomType* gt = (GeomType*)type;
+    gt->setAnyHitProg((AnyHit*)mdl->createProgram(Program::PtAnyHit, progName), rayType);
 }
 
 OWL_API void

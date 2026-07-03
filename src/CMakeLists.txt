@@ -4,6 +4,7 @@
 find_package(Threads)
 
 set(HEADERS
+    AnyHit.h
     Bounds.h
     Buffer.h
     ClosestHit.h
@@ -30,6 +31,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    AnyHit.cpp
     Bounds.cpp
     Buffer.cpp
     ClosestHit.cpp

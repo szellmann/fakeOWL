@@ -8,6 +8,7 @@
 
 #include <owl/owl_host.h>
 
+#include "AnyHit.h"
 #include "Bounds.h"
 #include "ClosestHit.h"
 #include "Intersect.h"
@@ -29,7 +30,7 @@ namespace fake
         void setBoundsProg(Bounds* bo);
         Bounds* getBoundsProg() const;
 
-        void setAnyHitProg(Program* ah, int rayType);
+        void setAnyHitProg(AnyHit* ah, int rayType);
 
         void setClosestHitProg(ClosestHit* ch, int rayType);
 
@@ -40,7 +41,7 @@ namespace fake
         OWLGeomKind kind;
 
         Bounds* bounds = nullptr;
-        std::vector<Program*> anyHit; // TODO: prob. store derived classes here!
+        std::vector<AnyHit*> anyHit; // TODO: prob. store derived classes here!
         std::vector<ClosestHit*> closestHit; // TODO: prob. store derived classes here!
         std::vector<Intersect*> intersect;
 

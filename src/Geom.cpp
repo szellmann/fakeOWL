@@ -1,6 +1,7 @@
 // Copyright 2021-2026 Stefan Zellmann
 // SPDX-License-Identifier: Apache-2.0
 
+#include "AnyHit.h"
 #include "Bounds.h"
 #include "ClosestHit.h"
 #include "Geom.h"
@@ -13,7 +14,7 @@ namespace fake
 
     // Private constructor
     Geom::Geom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
-               const std::vector<Program*>& anyHit,
+               const std::vector<AnyHit*>& anyHit,
                const std::vector<ClosestHit*>& closestHit)
         : VarDecl(sizeOfVarStruct, vars, numVars)
         , anyHit(anyHit)
@@ -35,6 +36,20 @@ namespace fake
         return primCount;
     }
 
+    AnyHit* Geom::getAnyHitProg(int rayType) const
+    {
+        if (rayType >= anyHit.size())
+        {
+            // That's _not_ an error:
+            /*FAKE_LOG(fake::logging::Level::Error) << "rayType " << rayType
+                                                  << " exceeds rayType count:"
+                                                  << anyHit.size();*/
+            return nullptr;
+        }
+
+        return anyHit[rayType];
+    }
+
     ClosestHit* Geom::getClosestHitProg(int rayType) const
     {
         if (rayType >= closestHit.size())
@@ -52,7 +67,7 @@ namespace fake
     // Private constructor
     UserGeom::UserGeom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
                        Bounds* bounds,
-                       const std::vector<Program*>& anyHit,
+                       const std::vector<AnyHit*>& anyHit,
                        const std::vector<ClosestHit*>& closestHit,
                        const std::vector<Intersect*>& intersect)
         : Geom(sizeOfVarStruct, vars, numVars, anyHit, closestHit)
@@ -86,7 +101,7 @@ namespace fake
 
 
     TrianglesGeom::TrianglesGeom(std::size_t sizeOfVarStruct, OWLVarDecl* vars, int numVars,
-                                 const std::vector<Program*>& anyHit,
+                                 const std::vector<AnyHit*>& anyHit,
                                  const std::vector<ClosestHit*>& closestHit)
         : Geom(sizeOfVarStruct, vars, numVars, anyHit, closestHit)
     {

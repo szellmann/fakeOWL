@@ -67,6 +67,21 @@ namespace fake
         intersect[rayType] = is;
     }
 
+    void GeomType::setAnyHitProg(AnyHit* ch, int rayType)
+    {
+        if (rayType >= context->getRayTypeCount())
+        {
+            FAKE_LOG(fake::logging::Level::Error) << "rayType " << rayType
+                                                  << " exceeds rayType count:"
+                                                  << context->getRayTypeCount();
+            return;
+        }
+
+        anyHit.resize(context->getRayTypeCount());
+
+        anyHit[rayType] = ch;
+    }
+
     void GeomType::setClosestHitProg(ClosestHit* ch, int rayType)
     {
         if (rayType >= context->getRayTypeCount())
