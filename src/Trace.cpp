@@ -104,7 +104,7 @@ struct AnyHitIntersector : visionaray::basic_intersector<AnyHitIntersector>
         state->objectRayDirection[1] = hr.objectRayDirection.y;
         state->objectRayDirection[2] = hr.objectRayDirection.z;
         state->rayTmin = tmin;
-        state->rayTmax = tmax;
+        state->rayTmax = hr.t;
         state->p0 = *r.payload->p0;
         state->p1 = *r.payload->p1;
         state->sbtPointer = geom->dataPtr;
