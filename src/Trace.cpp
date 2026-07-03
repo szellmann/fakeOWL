@@ -104,7 +104,7 @@ struct AnyHitIntersector : visionaray::basic_intersector<AnyHitIntersector>
         state->objectRayDirection[1] = hr.objectRayDirection.y;
         state->objectRayDirection[2] = hr.objectRayDirection.z;
         state->rayTmin = tmin;
-        state->rayTmax = hr.t; // returns hitT in rayTmax
+        state->rayTmax = tmax;
         state->p0 = *r.payload->p0;
         state->p1 = *r.payload->p1;
         state->sbtPointer = geom->dataPtr;
@@ -116,7 +116,7 @@ struct AnyHitIntersector : visionaray::basic_intersector<AnyHitIntersector>
     }
 
     float3 rayOrigin, rayDirection;
-    float tmin;
+    float tmin, tmax;
 };
 
 
@@ -179,6 +179,7 @@ void optixTrace(OptixTraversableHandle handle,
         intersector.rayOrigin = rayOrigin;
         intersector.rayDirection = rayDirection;
         intersector.tmin = tmin;
+        intersector.tmax = tmax;
         hr = intersector(r, bvh);
     }
 
