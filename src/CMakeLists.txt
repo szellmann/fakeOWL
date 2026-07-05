@@ -65,6 +65,7 @@ set(SOURCES
 
 set(fakeOwl_LIBRARY owl PARENT_SCOPE)
 add_library(owl ${HEADERS} ${SOURCES})
+set_target_properties(owl PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 target_link_libraries(owl PUBLIC ${CMAKE_DL_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 target_include_directories(owl INTERFACE
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>

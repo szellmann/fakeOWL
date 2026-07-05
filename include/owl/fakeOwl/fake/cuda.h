@@ -22,6 +22,8 @@
 #define __host__
 #define __device__
 
+#define __inline__ inline
+
 #ifdef _MSC_VER
 # define __forceinline__ __forceinline
 #else
