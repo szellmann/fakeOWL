@@ -3,7 +3,11 @@
 
 #include <sstream>
 
+#ifdef _MSC_VER
+#include "dlfcn_win32_compat.h"
+#else
 #include <dlfcn.h>
+#endif
 
 #include "Logging.h"
 #include "Module.h"

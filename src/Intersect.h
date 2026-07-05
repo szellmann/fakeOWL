@@ -7,8 +7,9 @@
 
 namespace fake
 {
-    struct Intersect : Program
+    class Intersect : public Program
     {
+    public:
         std::string entryPointPrefix();
 
         int rayType = 0;

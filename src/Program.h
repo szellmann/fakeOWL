@@ -13,8 +13,9 @@ namespace fake
 
     class Module;
 
-    struct Program : ContextResource
+    class Program : public ContextResource
     {
+    public:
         enum Type { PtBounds, PtAnyHit, PtClosestHit, PtMiss, PtIntersect, PtRayGen, };
 
         virtual ~Program();

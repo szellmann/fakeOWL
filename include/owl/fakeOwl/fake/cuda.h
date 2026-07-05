@@ -4,7 +4,11 @@
 #pragma once
 
 #if !defined(__aarch64__)
-#include <x86intrin.h>
+#ifdef _MSC_VER
+# include <intrin.h>
+#else
+# include <x86intrin.h>
+#endif
 #endif
 #include <stddef.h>
 #include <stdint.h>
@@ -18,7 +22,11 @@
 #define __host__
 #define __device__
 
-#define __forceinline__ __attribute__((always_inline))
+#ifdef _MSC_VER
+# define __forceinline__ __forceinline
+#else
+# define __forceinline__ __attribute__((always_inline))
+#endif
 
 // enums
 typedef enum cudaError {
@@ -90,9 +98,13 @@ inline uint64_t clock64()
     asm volatile("mrs %0, cntvct_el0" : "=r" (cnt));
     return cnt;
 #else
+#ifdef _MSC_VER
+    return __rdtsc();
+#else
     unsigned int lo,hi;
     __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
     return ((uint64_t)hi << 32) | lo;
+#endif
 #endif
 }
 
@@ -519,7 +531,11 @@ inline float4 make_float4(float x, float y, float z, float w)
 
 inline int atomicAdd(int* addr, int val)
 {
+#ifdef _MSC_VER
+    return _InterlockedExchangeAdd((volatile long*)addr, val);
+#else
     return __atomic_fetch_add(addr, val, __ATOMIC_RELAXED);
+#endif
 }
 
 // ------------------------------------------------------------------

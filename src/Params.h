@@ -12,8 +12,9 @@
 
 namespace fake
 {
-    struct Params : ContextResource, VarDecl
+    class Params : public ContextResource, public VarDecl
     {
+    public:
         Params(std::size_t sizeOfVarStruct, const OWLVarDecl* vars, int numVars);
     };
 

@@ -1,7 +1,11 @@
 // Copyright 2021-2026 Stefan Zellmann
 // SPDX-License-Identifier: Apache-2.0
 
+#ifdef _MSC_VER
+#include "dlfcn_win32_compat.h"
+#else
 #include <dlfcn.h>
+#endif
 
 #include "AnyHit.h"
 #include "Bounds.h"

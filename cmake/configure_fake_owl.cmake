@@ -30,6 +30,8 @@ macro(fake_owl_compile_and_embed output_var file)
     # Suffix used for dynamic libraries
     if (APPLE)
         set(suffixDL "dylib")
+    elseif(WIN32)
+        set(suffixDL "dll")
     else()
         set(suffixDL "so")
     endif()

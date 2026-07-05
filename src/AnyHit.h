@@ -7,8 +7,9 @@
 
 namespace fake
 {
-    struct AnyHit : Program
+    class AnyHit : public Program
     {
+    public:
         std::string entryPointPrefix();
 
         int rayType = 0;

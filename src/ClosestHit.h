@@ -7,8 +7,9 @@
 
 namespace fake
 {
-    struct ClosestHit : Program
+    class ClosestHit : public Program
     {
+    public:
         std::string entryPointPrefix();
 
         int rayType = 0;
