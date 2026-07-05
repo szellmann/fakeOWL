@@ -108,7 +108,6 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/owl
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     COMPONENT headers
     FILES_MATCHING
-        PATTERN "*.*" EXCLUDE
         PATTERN "*.h"
         PATTERN "*.hh"
         PATTERN "*.hpp"
