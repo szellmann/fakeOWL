@@ -16,6 +16,7 @@ macro(fake_owl_compile_and_embed output_var file)
     message("Adding target: ${targetName}")
 
     add_library(${targetName} SHARED ${file})
+    set_target_properties(${targetName} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
     # TODO: make this work:
     #target_compile_definitions(${targetName} PUBLIC __CUDA_ARCH__)
     target_compile_definitions(${targetName} PUBLIC FAKE_OWL_DEFINE_ENTRY_POINTS)
@@ -39,6 +40,7 @@ macro(fake_owl_compile_and_embed output_var file)
         #ifdef __cplusplus
         }
         #endif"
+        CONDITION "$<CONFIG:${CMAKE_BUILD_TYPE}>"
     )
 
     set(${output_var} ${embedded_file})
