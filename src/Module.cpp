@@ -38,7 +38,7 @@ namespace fake
         }
         else
         {
-            optixLaunchParamsSym = dlsym(handle, "?optixLaunchParams@@3PEAXEA");
+            optixLaunchParamsSym = dlsym(handle, "optixLaunchParams");
         }
 
         if (optixLaunchParamsSym != nullptr)
