@@ -1,4 +1,4 @@
-fake[Owl](https://github.com/NVIDIA/OWL)
+fake[OWL](https://github.com/NVIDIA/OWL)
 ===========
 
 A CPU implementation of OWL. Very experimental :-)
