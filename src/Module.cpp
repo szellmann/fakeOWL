@@ -30,9 +30,21 @@ namespace fake
             return;
         }
 
-        optixLaunchParamsSym = dlsym(handle, "optixLaunchParams");
+        using get_optixLaunchParams_t = void* (*)();
+        get_optixLaunchParams_t get_optixLaunchParams = (get_optixLaunchParams_t)dlsym(handle, "get_optixLaunchParams");
+        if (get_optixLaunchParams)
+        {
+            optixLaunchParamsSym = get_optixLaunchParams();
+        }
+        else
+        {
+            optixLaunchParamsSym = dlsym(handle, "?optixLaunchParams@@3PEAXEA");
+        }
+
         if (optixLaunchParamsSym != nullptr)
+        {
             FAKE_LOG_DBG << "Module has optixLaunchParams";
+        }
 
         fakePrepareRayGenSym = dlsym(handle, "fakePrepareRayGen");
         if (fakePrepareRayGenSym == nullptr)

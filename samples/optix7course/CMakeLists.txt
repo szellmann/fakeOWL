@@ -22,7 +22,6 @@ add_library(toneMap STATIC
   toneMap.cpp)
 add_executable(adv_optix7course
   ${embedded_ptx_code}
-  devicePrograms.cpp
   optix7.h
   CUDABuffer.h
   SampleRenderer.h

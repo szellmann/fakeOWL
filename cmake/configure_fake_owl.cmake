@@ -1,3 +1,5 @@
+set(CONFIGURE_FAKE_OWL_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE INTERNAL "")
+
 macro(fake_owl_compile_and_embed output_var file)
 
     set(multiArgs LINK_LIBRARIES)
@@ -24,10 +26,7 @@ macro(fake_owl_compile_and_embed output_var file)
     set_source_files_properties(${targetName} PROPERTIES LANGUAGE "CXX")
     target_link_libraries(${targetName} ${fakeOwl_LIBRARY} ${ARG_LINK_LIBRARIES})
     if (MSVC)
-        # On MSVC import with the exact mangled name from the DLL
-	# TODO: not sure how portable this is:
-        target_link_options(${targetName} PRIVATE "/alternatename:optixLaunchParams=__imp_?optixLaunchParams@@3PEAXEA"
-                                                  "/EXPORT:optixLaunchParams=owl.?optixLaunchParams@@3PEAXEA")
+        target_sources(${targetName} PRIVATE "${CONFIGURE_FAKE_OWL_DIR}/optix_launch_params_shim.cpp")
     endif()
     #set_property(TARGET ${targetName} PROPERTY INTERPROCEDURAL_OPTIMIZATION True)
     #set_property(TARGET ${targetName} PROPERTY COMPILE_FLAGS "-lto")
@@ -37,15 +36,15 @@ macro(fake_owl_compile_and_embed output_var file)
     file(
         GENERATE OUTPUT ${embedded_file}
         CONTENT
-        "#ifdef __cplusplus
-        extern \"C\" {
-        #endif
+"#ifdef __cplusplus
+extern \"C\" {
+#endif
 
-        const unsigned char ${output_var}[] = \"$<TARGET_FILE:${targetName}>\";
+const unsigned char ${output_var}[] = \"$<TARGET_FILE:${targetName}>\";
 
-        #ifdef __cplusplus
-        }
-        #endif"
+#ifdef __cplusplus
+}
+#endif"
     )
 
     set(${output_var} ${embedded_file})

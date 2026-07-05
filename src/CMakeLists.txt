@@ -128,6 +128,7 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/owlConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/owlConfigVersion.cmake
     ${PROJECT_SOURCE_DIR}/cmake/configure_fake_owl.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/optix_launch_params_shim.cpp
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/owl
 )
 
