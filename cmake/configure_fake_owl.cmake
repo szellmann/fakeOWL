@@ -23,10 +23,15 @@ macro(fake_owl_compile_and_embed output_var file)
     set_target_properties(${targetName} PROPERTIES LINKER_LANGUAGE "CXX")
     set_source_files_properties(${targetName} PROPERTIES LANGUAGE "CXX")
     target_link_libraries(${targetName} ${fakeOwl_LIBRARY} ${ARG_LINK_LIBRARIES})
+    if (MSVC)
+        # On MSVC import with the exact mangled name from the DLL
+	# TODO: not sure how portable this is:
+        target_link_options(${targetName} PRIVATE "/alternatename:optixLaunchParams=__imp_?optixLaunchParams@@3PEAXEA")
+    endif()
     #set_property(TARGET ${targetName} PROPERTY INTERPROCEDURAL_OPTIMIZATION True)
     #set_property(TARGET ${targetName} PROPERTY COMPILE_FLAGS "-lto")
 
-    set(embedded_file ${CMAKE_CURRENT_BINARY_DIR}/fakeOwl_${targetName}_embedded.c)
+    set(embedded_file ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/fakeOwl_${targetName}_embedded.c)
 
     file(
         GENERATE OUTPUT ${embedded_file}
@@ -40,7 +45,6 @@ macro(fake_owl_compile_and_embed output_var file)
         #ifdef __cplusplus
         }
         #endif"
-        CONDITION "$<CONFIG:${CMAKE_BUILD_TYPE}>"
     )
 
     set(${output_var} ${embedded_file})
