@@ -60,6 +60,9 @@ struct AnyHitIntersector : visionaray::basic_intersector<AnyHitIntersector>
     {
         auto hr = intersect(r, prim, std::forward<Args>(args)...);
 
+        if (!hr.hit)
+            return hr;
+
         fake::Geom* geom = (fake::Geom*)hr.geom;
         if (geom == nullptr)
             return hr;
